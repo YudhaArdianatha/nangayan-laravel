@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap");
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: xx-large;
+    color: #e0b973;
+    margin-bottom: 13px;
+}
+h1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #e0b973;
+}
+
+.copy a:hover {
+    text-decoration: underline;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.side {
+    background-image: url(../img/assets/hotel_bg3.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.side,
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side .copy {
+    text-align: center;
+}
+
+.content .copy {
+    text-align: center;
+}
+
+.content .copy p {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.content p.home {
+    position: absolute;
+    top: 5px;
+    right: 50px;
+    font-weight: 700;
+    font-size: x-large;
+    color: #e0b973;
+}
+
+.content form {
+    width: 60%;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="date"],
+form select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 0.5em;
+    margin-bottom: 10ox;
+    font-size: medium;
+    background-color: white;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: start;
+}
+
+.input-container.pass {
+    position: relative;
+}
+
+.signin-btn {
+    display: block;
+    width: 100%;
+    background-color: #e0b973;
+    color: white;
+    font-weight: 400;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: medium;
+    letter-spacing: 0.2rem;
+    transition: 0.2s ease-out;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.signin-btn:hover {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    border: none;
+    color: white;
+    background-color: #14274a;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: medium;
+    letter-spacing: 0.2rem;
+    cursor: pointer;
+}
+
+.input-container.credentials,
+.input-container.contact {
+    flex: 1; /* Mempersiapkan ruang yang sama untuk masing-masing grup input */
+    margin-right: 1rem;
+    flex-direction: column;
+    margin-bottom: 1.25rem; /* Menambahkan margin bawah untuk memisahkan dua div */
+}
+
+.input-container label {
+    margin-bottom: 0.5rem;
+    text-align: start;
+}
+
+.input-container input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 1em;
+    margin-bottom: 0.5rem; /* Mengurangi margin bawah */
+    font-size: medium;
+}
+
+.content .copy .cant_login {
+    background-color: #4cf977;
+    padding: 0.5rem;
+    border-radius: 5px;
+    color: white;
+}
+
+.form-group {
+    display: flex;
+}
+.form-group .form-wrapper {
+    width: 50%;
+}
+.form-group .form-wrapper:first-child {
+    margin-right: 20px;
+}
+
+.form-wrapper {
+    margin-bottom: 10px;
+}
+.form-wrapper label {
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+@media screen and (min-width: 900px) {
+    main {
+        flex-direction: row;
+        height: 100vh;
+    }
+    .side {
+        width: 40%;
+    }
+    .content {
+        width: 60%;
+    }
+    .side,
+    .content {
+        display: flex;
+        height: auto;
+    }
+}

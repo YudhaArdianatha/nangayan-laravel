@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top py-0">
+    <div class="container">
+      <a class="navbar-brand mt-0 py-0" href="#">
+        <img class="rounded-bottom" src="/img/assets/logo2.png" alt="NangAyan Hotel" width="120" style="height: 100%" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Rooms</a>
+          </li>
+          @if (auth()->user())
+          @auth
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              {{ auth()->user()->name }}
+            </a>
+          </li>
+          <li>
+            <form action="/logout" method="POST">
+              @csrf
+              <button type="submit" class="dropdown-item">
+                <i class="bi bi-box-arrow-in-left"></i> Logout
+              </button>
+            </form>
+          </li>
+          @else
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          @endif
+          @endauth
+        </ul>
+      </div>
+    </div>
+  </nav>
