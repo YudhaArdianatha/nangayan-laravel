@@ -29,6 +29,7 @@
               </button>
             </form>
           </li>
+          @endauth
           @else
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
@@ -37,7 +38,6 @@
             <a class="nav-link" href="/register">Register</a>
           </li>
           @endif
-          @endauth
         </ul>
       </div>
     </div>

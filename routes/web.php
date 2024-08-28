@@ -30,6 +30,6 @@ Route::get('register', [RegisterController::class, 'index'])->name('register')->
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', function(){
-    return view('/');
+    return view('admin.dashboard');
 })->middleware('auth');
 
