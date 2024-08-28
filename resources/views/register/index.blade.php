@@ -55,8 +55,8 @@
                             <label for="gender">Jenis Kelamin</label>
                             <select name="gender" id="gender" class="form-control">
                                 <option>Pilih Jenis Kelamin</option>
-                                <option value="male" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                                <option value="female" {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                <option value="Male" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="Female" {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                             </select>
                         </div>                        
                         <div class="form-wrapper">
