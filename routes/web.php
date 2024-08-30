@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,28 +36,17 @@ Route::get('/dashboard', function(){
     return view('admin.dashboard');
 })->middleware('auth');
 
-// Route::get('/users', [UserController::class, 'index'])->middleware('auth');
-
-// Route::get('/users/{user:slug}', [UserController::class, 'show']);
-
-// Route::get('/users/{user:slug}/edit', [UserController::class, 'edit']);
-
-// Route::put('/users/{user:slug}', [UserController::class, 'update']);
-
-// Route::delete('/users/{user:slug}', [UserController::class, 'destroy']);
 
 Route::resource('users', UserController::class)
     ->middleware('auth')
     ->parameters(['users' => 'user:slug']);
 
-// Route::post('/services', [ServiceController::class, 'store']);
-
-// Route::get('/services', [ServiceController::class, 'index'])->middleware('auth');
-
-// Route::get('/services/{service:slug}', [ServiceController::class, 'show']);
-
-// Route::get('/services', [ServiceController::class, 'create'])->middleware('auth');
 
 Route::resource('services', ServiceController::class)
     ->middleware('auth')
     ->parameters(['services' => 'service:slug']);
+
+Route::resource('rooms', RoomController::class)
+    ->middleware('auth')
+    ->parameters(['rooms' => 'room:slug']);
+
