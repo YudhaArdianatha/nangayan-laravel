@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top py-0 mx-0" style="width: 100vw">
+<nav class="navbar navbar-expand-lg navbar-dark py-0 mx-0 navbar-rd" style="width: 100vw">
     <div class="container">
       <a class="navbar-brand mt-0 py-0" href="#">
         <img class="rounded-bottom" src="/img/assets/logo2.png" alt="NangAyan Hotel" width="120" style="height: 100%" />
@@ -31,13 +31,6 @@
             </form>
           </li>
           @endauth
-          @else
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
           @endif
         </ul>
       </div>

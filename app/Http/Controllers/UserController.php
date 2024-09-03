@@ -15,6 +15,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+
+        if (request()->ajax()) {
+            return response()->json($users);
+        }
         return view('admin.users.users', compact('users'));
     }
 
@@ -71,6 +75,11 @@ class UserController extends Controller
 
     // Update the user
     User::where('id', $user->id)->update($validatedData);
+    
+
+    if ($request->ajax()){
+        return response()->json($user);
+    }
 
     return redirect('/users')->with('success', 'User has been updated!');
 }

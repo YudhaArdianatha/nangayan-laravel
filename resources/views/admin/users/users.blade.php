@@ -7,6 +7,11 @@
     <h1 class="h2">All Users</h1>
 </div>
 
+@if (session()->has('success'))
+    <div class="alert alert-success col-lg-8" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
 
 <div class="table-responsive">
     <table class="table table-hover table-sm">

@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SuitesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+// Route::get('/suites',function(){
+//     return view('suites');
+// });
+
+Route::get('suites', [SuitesController::class, 'index']);
+
+Route::get('suites/{slug}', [SuitesController::class, 'show']);
+
+// Route::resource('suites', SuitesController::class)
+//     ->middleware('auth');
 
 Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 
@@ -49,4 +61,3 @@ Route::resource('services', ServiceController::class)
 Route::resource('rooms', RoomController::class)
     ->middleware('auth')
     ->parameters(['rooms' => 'room:slug']);
-

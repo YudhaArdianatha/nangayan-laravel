@@ -28,6 +28,17 @@ class RegisterController extends Controller
 
         $validatedData['password'] = Hash::make($validatedData['password']);
 
+        if($request->ajax()){
+            $users = User::create($validatedData);
+            $token = $users->createToken('myapp_token')->plainTextToken;
+            $response = [
+                'users' => $users,
+                'token' => $token
+            ];
+
+            return response()->json($response);
+        }
+
         User::create($validatedData);
 
         return redirect('/login')->with('success', 'Registration successful. Please login!');

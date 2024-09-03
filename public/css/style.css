@@ -69,6 +69,12 @@ a {
     flex-direction: row;
     position: absolute;
     top: 0;
+    transition: all 0.5s;
+}
+
+.navbar-scrolled {
+    background-color: #e0b973;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .navbar ul button {
@@ -460,7 +466,7 @@ main {
     justify-content: flex-end;
 }
 
-.room .content-botton button {
+.room .content-botton a {
     background-color: #e0b973;
     border: #e0b973 solid 2px;
     border-radius: 5px;
@@ -1081,6 +1087,24 @@ footer .social {
 .container-au .content-tc h2 {
     font-size: larger;
     font-weight: normal;
+}
+
+.room-button {
+    display: flex;
+    justify-content: end;
+    margin: 10px;
+}
+
+.room-button a {
+    background-color: #e0b973;
+    border: #e0b973 solid 2px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: larger;
+    font-weight: 700;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {

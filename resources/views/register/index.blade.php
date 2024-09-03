@@ -23,7 +23,7 @@
                     <h2 class="mb-3">Register Form</h2>
                     <div class="input-container text-start">
                         <label for="name">Nama Lengkap</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Example" value="{{ old('name') }}" required>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Example" value="{{ old('name') }}" autofocus required>
                         @error('name')
                             <div class="invalid-feedback text-start">
                                 {{ $message }}

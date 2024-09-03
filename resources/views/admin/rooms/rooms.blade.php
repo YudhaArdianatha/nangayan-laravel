@@ -11,6 +11,12 @@
     <a class="btn btn-primary" href="/rooms/create">Add Room</a>
 </div>
 
+@if (session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
+
 <div class="table-responsive">
     <table class="table table-hover table-sm">
         <thead>

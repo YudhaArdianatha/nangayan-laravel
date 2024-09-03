@@ -15,14 +15,19 @@ class ServiceController extends Controller
      * Display a listing of the resource.
      */
 
-     public function __construct()
-     {
-         $this->middleware('auth');
-     }
+    //  public function __construct()
+    //  {
+    //      $this->middleware('auth');
+    //  }
 
     public function index()
     {
         $services = Service::all();
+
+        if (request()->ajax()){
+            return response()->json($services);
+        }
+
         return view('admin.services.services', compact('services'));
     }
 
@@ -47,7 +52,16 @@ class ServiceController extends Controller
 
         $validatedData['slug'] = strtolower(str_replace(' ', '-', $validatedData['service_name']));
 
+        // if (request()->ajax()){
+        //     $updated = Service::create($validatedData);
+        //     return response()->json($updated);
+        // }
+
         Service::create($validatedData);
+
+        if (request()->ajax()){
+            return response()->json($validatedData);
+        }
 
         return redirect('/services')->with('success', 'Service has been added!');
     }
@@ -84,7 +98,16 @@ class ServiceController extends Controller
 
         $validatedData['slug'] = strtolower(str_replace(' ', '-', $validatedData['service_name']));
 
+        // if (request()->ajax()){
+        //     $updated = Service::where('id', $service->id)->update($validatedData);
+        //     return response()->json($updated);
+        // }
+
         Service::where('id', $service->id)->update($validatedData);
+
+        if (request()->ajax()){
+            return response()->json($validatedData);
+        }
 
         return redirect('/services')->with('success', 'Service has been updated!');
     }
@@ -95,6 +118,11 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         $service->delete();
+
+        if (request()->ajax()){
+            return response()->json($service);
+        }
+
         return redirect('/services')->with('success', 'Service has been deleted!');
     }
 

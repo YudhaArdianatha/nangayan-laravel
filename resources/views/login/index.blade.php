@@ -38,7 +38,7 @@
 
                     <div class="input-container name text-start">
                         <label for="email">Email</label>
-                        <input type="text" name="email" id="email" required>
+                        <input type="text" name="email" id="email" autofocus required>
                     </div>
                     <div class="input-container pass text-start">
                         <label for="password">Password</label>

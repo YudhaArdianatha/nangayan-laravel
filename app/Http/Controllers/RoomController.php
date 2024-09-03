@@ -14,7 +14,12 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = room::all();
+        $rooms = Room::all();
+
+        if(request()->ajax()){
+            return response()->json($rooms);
+        }
+
         return view('admin.rooms.rooms', compact('rooms'));
     }
 
@@ -75,7 +80,7 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(room $room)
+    public function show(Room $room)
     {
         return view('admin.rooms.room', compact('room'));
     }
