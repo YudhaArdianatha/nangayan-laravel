@@ -38,23 +38,37 @@
                                         <div class="date">
                                             <h4 class="fw-bold px-3">Start Booking</h4>
                                             <h3 class="mx-0 mt-2 mb-0 fw-bold px-3" style="color: #e0b973;">Rp. {{ number_format($room->room_price, 0, ',', '.') }} Per Night</h3>
-                                            <form action="" method="POST">
+                                            <form action="{{ route('bookings.store', $room) }}" method="POST">
                                                 @csrf
-                                                <label for="checkin" class="form-label mb-0">Pick a Check In Date</label>
-                                                <input type="date" class="form-control @error ('checkin') is-invalid @enderror" id="checkin" name="checkin" required>
-                                                @error('checkin')
+                                                <label for="checkin_date" class="form-label mb-0">Pick a Check In Date</label>
+                                                <input type="date" class="form-control @error ('checkin_date') is-invalid @enderror" id="checkin_date" name="checkin_date" required>
+                                                @error('checkin_date')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
-                                                <label for="checkout" class="form-label mb-0">Pick a Check Out Date</label>
-                                                <input type="date" class="form-control @error ('checkout') is-invalid @enderror" id="checkout" name="checkout" required>
-                                                @error('checkout')
+                                                <label for="checkout_date" class="form-label mb-0">Pick a Check Out Date</label>
+                                                <input type="date" class="form-control @error ('checkout_date') is-invalid @enderror" id="checkout_date" name="checkout_date" required>
+                                                @error('checkout_date')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
-                                                <button type="submit" class="btn btn-primary">Book Now</button>
+                                                <label for="num_of_rooms" class="form-label mb-0">Number of Rooms to Book</label>
+                                                <input type="number" inputmode="numeric" class="form-control @error ('num_of_rooms') is-invalid @enderror" id="num_of_rooms" name="num_of_rooms" min="1" max="{{ $room->available_rooms }}" required>
+                                                @error('num_of_rooms')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                @if(session('num_of_rooms'))
+                                                    <div class="alert alert-danger">
+                                                        {{ session('num_of_rooms') }}
+                                                    </div>
+                                                @endif
+
+
+                                                <button type="submit" class="btn btn-primary mt-3">Book Now</button>
                                             </form>
                                         </div>
                                     </div>

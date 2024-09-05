@@ -52,7 +52,7 @@ class RoomController extends Controller
             'extra_image' => $request->file('extra_image'),
         ];
 
-        $room = Room::create($request->only(['room_type', 'room_description', 'room_price']));
+        $room = Room::create($request->only(['room_type', 'room_description', 'room_price', 'total_rooms']));
 
         $roomSlug = $room->slug;
 

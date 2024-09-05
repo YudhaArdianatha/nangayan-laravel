@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingServiceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RoomController;
@@ -29,7 +31,7 @@ Route::get('/', function () {
 
 Route::get('suites', [SuitesController::class, 'index']);
 
-Route::get('suites/{slug}', [SuitesController::class, 'show']);
+// Route::get('suites/{slug}', [SuitesController::class, 'show']);
 
 // Route::resource('suites', SuitesController::class)
 //     ->middleware('auth');
@@ -61,3 +63,13 @@ Route::resource('services', ServiceController::class)
 Route::resource('rooms', RoomController::class)
     ->middleware('auth')
     ->parameters(['rooms' => 'room:slug']);
+
+
+Route::middleware(['auth', 'checkMember'])->group(function () {
+    Route::get('/suites/{room:slug}/book', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/suites/{room:slug}/book', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/bookings/{booking:slug}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/bookings/{booking:slug}/payment', [BookingController::class, 'calculateTotal'])->name('bookings.payment');
+});
+
+Route::post('/booking/{booking:slug}/services', [BookingServiceController::class, 'store'])->name('booking_services.store');

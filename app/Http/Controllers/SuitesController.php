@@ -13,10 +13,10 @@ class SuitesController extends Controller
         return view('suites', compact('rooms'));
     }
 
-    public function show($slug){
-        $room = Room::where('slug', $slug)->first();
-        return view('orders.orderDetail', compact('room'));
-    }
+    // public function show($slug){
+    //     $room = Room::where('slug', $slug)->first();
+    //     return view('orders.orderDetail', compact('room'));
+    // }
 
     // public function show(room $room)
     // {

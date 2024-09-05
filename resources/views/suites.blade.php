@@ -16,7 +16,7 @@
                     <div class="card-body p-0">
                       <h2 class="card-title">{{ $room->room_type }}</h2>
                       <div class="room-button">
-                          <a href="/suites/{{ $room->slug }}" class="btn mt-2">Rp. {{ number_format($room->room_price, 0, ',', '.') }}</a>
+                          <a href="/suites/{{ $room->slug }}/book" class="btn mt-2">Rp. {{ number_format($room->room_price, 0, ',', '.') }}</a>
                       </div>
                     </div>
                   </div>

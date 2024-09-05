@@ -36,6 +36,13 @@
                     @enderror
                 </div>                
                 <div class="mb-3">
+                    <label for="total_rooms" class="form-label">Total Rooms</label>
+                    <input type="number" inputmode="numeric" class="form-control" id="total_rooms" name="total_rooms" value="{{ old('service_price') }}">
+                    @error('total_rooms')
+                        <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                </div>                
+                <div class="mb-3">
                     <label for="room_image" class="form-label">Room Image</label>
                     <input class="form-control" type="file" id="room_image" name="room_image" value="{{ old('room_image') }}">
                     @error('room_image')
