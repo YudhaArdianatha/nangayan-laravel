@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\BookingService;
 use App\Models\Room;
+use App\Models\RoomNumber;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,17 +29,17 @@ class BookingController extends Controller
         $validated = $request->validate([
             'checkin_date' => 'required|date|after_or_equal:today',
             'checkout_date' => 'required|date|after:checkin_date',
-            'num_of_rooms' => 'required|numeric|min:1|max:'.$room->available_rooms,
+            'num_of_rooms' => 'required|numeric|min:1',
         ]);
-
-
-        
-        if(!$room->checkAvailability($validated['checkin_date'], $validated['checkout_date'], $validated['num_of_rooms'])){
-            return back()->with(['num_of_rooms' => 'Rooms are not available for the selected date range.']);
-        }
-        
-        // dd($validated);
     
+        $available_rooms = $room->getAvailableRooms($validated['checkin_date'], $validated['checkout_date']);
+    
+        if ($available_rooms < $validated['num_of_rooms']) {
+            return back()->with('num_of_rooms', "Hanya tersedia $available_rooms kamar dari tanggal " . 
+                $validated['checkin_date'] . " hingga " . $validated['checkout_date']);
+        }
+    
+        // Buat booking
         $booking = Booking::create([
             'user_id' => Auth::id(),
             'room_id' => $room->id,
@@ -46,12 +48,40 @@ class BookingController extends Controller
             'num_of_rooms' => $validated['num_of_rooms'],
             'slug' => Str::slug($room->room_type . '-' . time()),
         ]);
-
     
+        // Alokasi room_number untuk booking
+        $allocatedRoomNumbers = $this->allocateRoomNumbers($room, $validated['num_of_rooms'], $booking->id);
+    
+        // Update ketersediaan kamar
         $room->available_rooms -= $validated['num_of_rooms'];
         $room->save();
     
         return redirect()->route('bookings.show', ['booking' => $booking->slug]);
+    }
+    
+    // Method untuk alokasi room_number
+    private function allocateRoomNumbers(Room $room, int $numOfRooms, int $bookingId)
+    {
+        // Ambil room_number yang sudah digunakan
+        $usedRoomNumbers = RoomNumber::where('room_id', $room->id)->pluck('room_number')->toArray();
+    
+        // Hitung total room_number yang tersedia untuk room_type ini
+        $totalRooms = $room->total_rooms;
+        $availableRoomNumbers = array_diff(range(1, $totalRooms), $usedRoomNumbers);
+    
+        // Ambil room_number yang tersedia sesuai jumlah num_of_rooms
+        $allocatedRoomNumbers = array_slice($availableRoomNumbers, 0, $numOfRooms);
+    
+        // Simpan room_number yang dialokasikan ke database
+        foreach ($allocatedRoomNumbers as $roomNumber) {
+            RoomNumber::create([
+                'room_id' => $room->id,
+                'booking_id' => $bookingId,
+                'room_number' => $roomNumber,
+            ]);
+        }
+    
+        return $allocatedRoomNumbers;
     }
     
 
@@ -82,6 +112,14 @@ class BookingController extends Controller
         if ($serviceId && $quantity) {
             $servicePrice = Service::find($serviceId)->service_price;
             $totalServicePrice = $servicePrice * $numOfNights * $quantity;
+        
+            // Simpan ke tabel booking_services
+            BookingService::create([
+                'booking_id' => $booking->id,
+                'service_id' => $serviceId,
+                'quantity' => $quantity,
+                'price' => $servicePrice * $quantity,
+            ]);
         } else {
             $totalServicePrice = 0;
         }
@@ -109,7 +147,8 @@ class BookingController extends Controller
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => $booking->id,
+                'order_id' => $booking->slug . '-' . $booking->id,
+                // 'order_id' => $booking->id,
                 'gross_amount' => $totalAmount,
             ),
             'customer_details' => array(
@@ -122,7 +161,33 @@ class BookingController extends Controller
 
         // dd($snapToken);
 
+        $request->session()->forget(['service_id', 'quantity']);
+
         return view('orders.payment', compact('booking', 'numOfNights', 'numOfRooms', 'totalRoomPrice', 'totalServicePrice', 'totalAmount', 'snapToken'));
     }
+
+    public function status()
+    {
+        // Ambil booking berdasarkan user login
+        $booking = Booking::where('user_id', auth()->id())->latest()->first();
+
+        if (!$booking) {
+            return redirect()->back()->with('error', 'No booking found.');
+        }
+
+        $bookingService = BookingService::where('booking_id', $booking->id)->with('service')->first();
+
+        // Ambil data layanan, user, dan kamar terkait
+        $services = Service::all();
+        $user = $booking->user;
+        $room = $booking->room;
+
+        // Ambil room numbers terkait dengan booking
+        $roomNumbers = $booking->roomNumbers;
+
+        // Mengarahkan ke halaman status.blade.php dengan data booking, roomNumbers, dll.
+        return view('status', compact('booking', 'services', 'user', 'roomNumbers', 'bookingService'));
+    }
+
 
 }

@@ -70,6 +70,8 @@ Route::middleware(['auth', 'checkMember'])->group(function () {
     Route::post('/suites/{room:slug}/book', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('/bookings/{booking:slug}', [BookingController::class, 'show'])->name('bookings.show');
     Route::get('/bookings/{booking:slug}/payment', [BookingController::class, 'calculateTotal'])->name('bookings.payment');
+    Route::get('/status', [BookingController::class, 'status'])->name('bookings.status');
 });
+
 
 Route::post('/booking/{booking:slug}/services', [BookingServiceController::class, 'store'])->name('booking_services.store');

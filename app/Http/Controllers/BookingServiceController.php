@@ -10,13 +10,18 @@ class BookingServiceController extends Controller
 {
     public function store(Request $request, Booking $booking)
     {
-        $serviceId = $request->service_id;
-        $quantity = $request->quantity;
+        // Validate the incoming request
+        $request->validate([
+            'service_id' => 'required|exists:services,id',
+            'quantity' => 'required|numeric|min:1',
+        ]);
 
-        $request->session()->put('service_id', $serviceId);
-        $request->session()->put('quantity', $quantity);
+        // Store the service_id and quantity in the session
+        $request->session()->put('service_id', $request->service_id);
+        $request->session()->put('quantity', $request->quantity);
 
-        return redirect()->route('bookings.payment', $booking->slug);
+        // Redirect to the payment page
+        return redirect()->route('bookings.payment', ['booking' => $booking->slug]);
     }
     
 }

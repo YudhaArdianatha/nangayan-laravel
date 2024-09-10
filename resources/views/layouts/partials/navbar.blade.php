@@ -21,6 +21,17 @@
               {{ auth()->user()->name }}
             </a>
           </li>
+          <li class="nav-item">
+            {{-- @if(auth()->user()->latestBooking) --}}
+                <a class="nav-link" href="/status">
+                    Status
+                </a>
+            {{-- @else
+                <a class="nav-link" href="#">
+                    No Active Booking
+                </a>
+            @endif --}}
+          </li>
           <li>
             <form action="/logout" method="POST">
               @csrf

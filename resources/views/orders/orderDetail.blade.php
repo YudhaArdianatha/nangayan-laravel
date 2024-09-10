@@ -55,14 +55,14 @@
                                                     </div>
                                                 @enderror
                                                 <label for="num_of_rooms" class="form-label mb-0">Number of Rooms to Book</label>
-                                                <input type="number" inputmode="numeric" class="form-control @error ('num_of_rooms') is-invalid @enderror" id="num_of_rooms" name="num_of_rooms" min="1" max="{{ $room->available_rooms }}" required>
+                                                <input type="number" inputmode="numeric" class="form-control @error ('num_of_rooms') is-invalid @enderror" id="num_of_rooms" name="num_of_rooms" min="1" required>
                                                 @error('num_of_rooms')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                                 @if(session('num_of_rooms'))
-                                                    <div class="alert alert-danger">
+                                                    <div class="alert alert-danger mt-3">
                                                         {{ session('num_of_rooms') }}
                                                     </div>
                                                 @endif

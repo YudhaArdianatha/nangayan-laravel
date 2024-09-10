@@ -36,20 +36,42 @@ class Room extends Model
         return $this->hasMany(Booking::class);
     }
 
-    public function checkAvailability($checkinDate, $checkoutDate, $numOfRooms)
+    public function checkAvailability($checkin_date, $checkout_date, $num_of_rooms)
     {
-        $bookedRooms = Booking::where('room_id', $this->id)
-                            ->where(function ($query) use ($checkinDate, $checkoutDate) {
-                                $query->whereBetween('checkin_date', [$checkinDate, $checkoutDate])
-                                        ->orWhereBetween('checkout_date', [$checkinDate, $checkoutDate])
-                                        ->orWhere(function ($query) use ($checkinDate, $checkoutDate) {
-                                            $query->where('checkin_date', '<=', $checkinDate)
-                                                ->where('checkout_date', '>=', $checkoutDate);
-                                        });
-                            })
-                            ->sum('num_of_rooms');
+        // Hitung jumlah kamar yang sudah dipesan pada rentang tanggal yang sama
+        $booked_rooms = $this->bookings()
+            ->where(function ($query) use ($checkin_date, $checkout_date) {
+                $query->whereBetween('checkin_date', [$checkin_date, $checkout_date])
+                      ->orWhereBetween('checkout_date', [$checkin_date, $checkout_date])
+                      ->orWhere(function ($query) use ($checkin_date, $checkout_date) {
+                          $query->where('checkin_date', '<=', $checkin_date)
+                                ->where('checkout_date', '>=', $checkout_date);
+                      });
+            })
+            ->sum('num_of_rooms');
+        
+        // Cek apakah kamar tersedia
+        $available_rooms = $this->total_rooms - $booked_rooms;
 
-        return ($this->available_rooms - $bookedRooms) >= $numOfRooms;
+        return $available_rooms >= $num_of_rooms;
+    }
+
+    public function getAvailableRooms($checkin_date, $checkout_date)
+    {
+        // Hitung jumlah kamar yang sudah dipesan pada rentang tanggal yang sama
+        $booked_rooms = $this->bookings()
+            ->where(function ($query) use ($checkin_date, $checkout_date) {
+                $query->whereBetween('checkin_date', [$checkin_date, $checkout_date])
+                      ->orWhereBetween('checkout_date', [$checkin_date, $checkout_date])
+                      ->orWhere(function ($query) use ($checkin_date, $checkout_date) {
+                          $query->where('checkin_date', '<=', $checkin_date)
+                                ->where('checkout_date', '>=', $checkout_date);
+                      });
+            })
+            ->sum('num_of_rooms');
+
+        // Hitung jumlah kamar yang masih tersedia
+        return $this->total_rooms - $booked_rooms;
     }
 
 }

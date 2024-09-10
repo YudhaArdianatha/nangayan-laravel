@@ -21,6 +21,11 @@
               {{ auth()->user()->name }}
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/status">
+              Status
+            </a>
+          </li>
           <li>
             <form action="/logout" method="POST">
               @csrf

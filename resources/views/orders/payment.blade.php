@@ -83,6 +83,7 @@ data-client-key="{{ config('midtrans.client_key') }}">
         window.snap.pay('{{ $snapToken }}', {
             onSuccess: function (result) {
             alert("payment success!"); console.log(result);
+            window.location.href = '/status';
             },
             onPending: function (result) {
             alert("waiting for your payment!"); console.log(result);
