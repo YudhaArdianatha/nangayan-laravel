@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Controllers\ServiceController;
 use App\Admin\Controllers\UserController;
 use Illuminate\Routing\Router;
 
@@ -15,5 +16,6 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
 
     $router->resource('users', UserController::class);
+    $router->resource('services', ServiceController::class);
 
 });
