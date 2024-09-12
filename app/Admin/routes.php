@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Controllers\BookingController;
 use App\Admin\Controllers\RoomController;
 use App\Admin\Controllers\ServiceController;
 use App\Admin\Controllers\UserController;
@@ -19,5 +20,5 @@ Route::group([
     $router->resource('users', UserController::class);
     $router->resource('services', ServiceController::class);
     $router->resource('rooms', RoomController::class);
-
+    $router->resource('bookings', BookingController::class);
 });
