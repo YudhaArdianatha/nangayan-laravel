@@ -1,6 +1,8 @@
 <?php
 
 use App\Admin\Controllers\BookingController;
+use App\Admin\Controllers\IncomeChartController;
+use App\Admin\Controllers\ReportController;
 use App\Admin\Controllers\RoomController;
 use App\Admin\Controllers\ServiceController;
 use App\Admin\Controllers\UserController;

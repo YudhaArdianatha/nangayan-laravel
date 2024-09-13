@@ -32,7 +32,9 @@ class RoomController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('room_type', __('Room type'));
         $grid->column('room_description', __('Room description'));
-        $grid->column('room_price', __('Room price'));
+        $grid->column('room_price', __('Room price'))->display(function($price) {
+            return 'Rp ' . number_format($price, 0, ',', '.');
+        });
         $grid->column('total_rooms', __('Total rooms'));
         $grid->column('available_rooms', __('Available rooms'));
 

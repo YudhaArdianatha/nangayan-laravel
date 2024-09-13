@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -29,9 +30,23 @@ class BookingController extends AdminController
      *
      * @return Grid
      */
-    protected function grid()
+
+
+    // Report menjadi satu dengan di booking dikarenakan isinya sama
+    public function index(Content $content)
     {
         $grid = new Grid(new Booking());
+
+        // $grid->disableCreateButton();
+
+        $grid->filter(function ($filter) {
+            $filter->between('checkin_date', 'Date Range')->datetime();
+            $filter->select('status', 'Status')->options([
+                '' => 'All',
+                'pending' => 'Pending',
+                'paid' => 'Paid',
+            ]);
+        });
 
         $grid->column('id', __('Id'));
         $grid->column('user.name', __('User'));
@@ -40,10 +55,25 @@ class BookingController extends AdminController
         $grid->column('checkout_date', __('Checkout date'));
         $grid->column('num_of_rooms', __('Number of rooms'));
         $grid->column('status', __('Status'));
-        $grid->column('total_payment', __('Total payment'));
+        $grid->column('total_payment', __('Total payment'))->display(function ($totalPayment) {
+            return 'Rp ' . number_format($totalPayment, 0, ',', '.');
+        });
 
+        // Customize the grid to add a summary row
+        $grid->footer(function ($query) {
+            $totalBooking = $query->count();
+            $totalRevenue = $query->sum('total_payment');
 
-        return $grid;
+            return '<div class="box-footer">'
+                . '<p>Total Bookings: ' . $totalBooking . '</p>'
+                . '<p>Total Revenue: Rp ' . number_format($totalRevenue, 0, ',', '.') . '</p>'
+                . '</div>';
+        });
+
+        return $content
+            ->title('Bookings')
+            ->description('List')
+            ->body($grid);
     }
 
     /**
@@ -67,10 +97,16 @@ class BookingController extends AdminController
         $show->field('checkin_date', __('Checkin date'));
         $show->field('checkout_date', __('Checkout date'));
         $show->field('status', __('Status'));
-        $show->field('num_of_rooms', __('Num of rooms'));
-        $show->field('total_room_payment', __('Total room payment'));
-        $show->field('total_service_payment', __('Total service payment'));
-        $show->field('total_payment', __('Total payment'));
+        $show->field('num_of_rooms', __('Number of rooms'));
+        $show->field('total_room_payment', __('Total room payment'))->as(function ($total_room_payment) {
+            return 'Rp ' . number_format($total_room_payment, 0, ',', '.');
+        });
+        $show->field('total_service_payment', __('Total service payment'))->as(function ($total_service_payment) {
+            return 'Rp ' . number_format($total_service_payment, 0, ',', '.');
+        });
+        $show->field('total_payment', __('Total payment'))->as(function ($total_payment) {
+            return 'Rp ' . number_format($total_payment, 0, ',', '.');
+        });
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
