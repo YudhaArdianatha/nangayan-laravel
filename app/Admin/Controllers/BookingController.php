@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Grid\Exporters\CsvExporter;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Log;
@@ -37,29 +38,23 @@ class BookingController extends AdminController
     {
         $grid = new Grid(new Booking());
 
-        // $grid->disableCreateButton();
-
         $grid->filter(function ($filter) {
             $filter->between('checkin_date', 'Date Range')->datetime();
-            $filter->select('status', 'Status')->options([
-                '' => 'All',
-                'pending' => 'Pending',
-                'paid' => 'Paid',
-            ]);
         });
 
-        $grid->column('id', __('Id'));
+        $grid->model()->orderBy('created_at', 'desc'); 
+
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('user.name', __('User'));
         $grid->column('room.room_type', __('Room Type'));
-        $grid->column('checkin_date', __('Checkin date'));
-        $grid->column('checkout_date', __('Checkout date'));
+        $grid->column('checkin_date', __('Checkin date'))->sortable();
+        $grid->column('checkout_date', __('Checkout date'))->sortable();
         $grid->column('num_of_rooms', __('Number of rooms'));
         $grid->column('status', __('Status'));
         $grid->column('total_payment', __('Total payment'))->display(function ($totalPayment) {
             return 'Rp ' . number_format($totalPayment, 0, ',', '.');
         });
 
-        // Customize the grid to add a summary row
         $grid->footer(function ($query) {
             $totalBooking = $query->count();
             $totalRevenue = $query->sum('total_payment');

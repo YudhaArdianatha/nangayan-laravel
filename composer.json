@@ -9,6 +9,8 @@
         "cviebrock/eloquent-sluggable": "^10.0",
         "encore/laravel-admin": "^1.8",
         "guzzlehttp/guzzle": "^7.2",
+        "itsgoingd/clockwork": "^5.2",
+        "laravel-admin-ext/chartjs": "^1.0",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
