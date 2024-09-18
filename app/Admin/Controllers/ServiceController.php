@@ -3,10 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Service;
+use Encore\Admin\Auth\Permission;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 
@@ -26,6 +28,10 @@ class ServiceController extends AdminController
      */
     protected function grid()
     {
+
+        // Permission::check('ServiceList');
+
+
         $grid = new Grid(new Service());
 
         $grid->column('id', __('Id'));
@@ -69,6 +75,7 @@ class ServiceController extends AdminController
      */
     protected function form()
     {
+
         $form = new Form(new Service());
 
         $form->text('service_name', __('Service name'));
@@ -80,5 +87,5 @@ class ServiceController extends AdminController
         });
 
         return $form;
-    }
+    }    
 }

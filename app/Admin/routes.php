@@ -23,4 +23,8 @@ Route::group([
     $router->resource('rooms', RoomController::class);
     $router->resource('bookings', BookingController::class);
     $router->resource('charts', IncomeChartController::class);
+
+    // $router->group(['middleware' => ['can:service.list']], function (Router $router) {
+    //     $router->resource('services', ServiceController::class);
+    // });
 });
