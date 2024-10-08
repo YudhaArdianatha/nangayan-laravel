@@ -414,6 +414,7 @@ main {
 .card .content-description p {
     font-size: 17px;
     margin-right: 10px;
+    text-align: start;
 }
 
 .card img {
@@ -1158,13 +1159,13 @@ footer .social {
     }
 
     .content .bonus {
-        width: 25rem;
+        /* width: 25rem; */
         text-align: center;
     }
 
     .card {
         flex-direction: column;
-        width: 90%;
+        /* width: 90%; */
     }
 
     .card .content-description p {
@@ -1220,14 +1221,15 @@ footer .social {
 
     .BS .content-form .form-group {
         flex-direction: row;
+        width: fit-content;
     }
 
     .BS .content-form .form-group .form-wrapper {
-        width: 12rem;
+        width: fit-content;
     }
 
     .BS .content-form .form-group .form-wrapper input {
-        width: 12rem;
+        width: 9.5rem;
     }
 
     footer {
@@ -1242,6 +1244,32 @@ footer .social {
         align-items: center;
         flex-direction: column;
         text-align: center;
+    }
+
+    .frame .date {
+        padding: 5px;
+    }
+
+    .frame .date form {
+        padding: 0;
+    }
+
+    .room_img_left {
+        height: 22rem;
+        padding: 0 12px;
+    }
+
+    .room_img_left img {
+        height: 21.5rem;
+    }
+
+    .BS .info .information {
+        padding: 0;
+    }
+
+    .BS .code {
+        width: auto;
+        padding-right: 10px;
     }
 }
 

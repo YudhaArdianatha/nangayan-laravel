@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col text-center content-rd">
                 <div class="content">
-                    <h1>Booking Informatin</h1>
+                    <h1>Booking Information</h1>
                     <div class="bonus">
                         Please chose the service that you want to add
                     </div>

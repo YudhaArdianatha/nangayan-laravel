@@ -24,6 +24,9 @@ Route::group([
     $router->resource('bookings', BookingController::class);
     $router->resource('charts', IncomeChartController::class);
 
+    $router->get('services/export-pdf', 'ServiceController@exportPdf')->name('admin.services.export-pdf');
+
+
     // $router->group(['middleware' => ['can:service.list']], function (Router $router) {
     //     $router->resource('services', ServiceController::class);
     // });

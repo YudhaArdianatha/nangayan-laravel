@@ -35,11 +35,23 @@ class UserController extends AdminController
         $grid->column('phone_number', __('Phone number'));
         $grid->column('gender', __('Gender'));
         $grid->column('slug', __('Slug'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        // $grid->column('email_verified_at', __('Email verified at'));
+        // $grid->column('password', __('Password'));
+        // $grid->column('remember_token', __('Remember token'));
+        // $grid->column('created_at', __('Created at'));
+        // $grid->column('updated_at', __('Updated at'));
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('name', 'Name');
+            $filter->like('email', 'Email');
+        });
+
+        $grid->disableColumnSelector();
+        $grid->disableBatchActions();
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+        });
 
         return $grid;
     }

@@ -8,6 +8,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SuitesController;
 use App\Http\Controllers\UserController;
+use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $newRooms = Room::take(1)->get();
+    return view('home', compact('newRooms'));
+});
+
+Route::get('/AboutUs', function () {
+    return view('AboutUs');
+});
+
+Route::get('/termAndConditions', function () {
+    return view('termAndCondition');
 });
 
 // Route::get('/suites',function(){

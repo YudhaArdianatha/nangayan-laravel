@@ -5,13 +5,17 @@
     <div class="row">
         <div class="col text-center content-rd">
             <div class="content">
+                <div class="row justify-content-center">
                     <h1>Booking Status</h1>
+                </div>
+                <div class="row">
                     <div class="bonus">
                         You can see your booking status below
                     </div>
-                    <div class="BS" style="width: auto">
-                        <div class="p-3">
-                            <div class="bg-container">
+                </div>
+                    <div class="row justify-content-center align-items-center BS" style="width: auto">
+                        <div class="p-3 col">
+                            <div class="row bg-container">
                                 <img src="/storage/{{ $booking->room->photos->where('photo_type', 'room_image')->first()->photo_path }}" alt="">
                             </div>
                             <div class="status-kamar">
@@ -19,7 +23,7 @@
                             </div>
                             <h4>Bali, Indonesia</h4>
                         </div>
-                        <form class="content-form d-flex gap-2 text-start">
+                        <form class="content-form d-flex gap-2 text-start col">
                             <div class="form-group">
                                 <div class="form-wrapper">
                                     <label for="">Name</label>

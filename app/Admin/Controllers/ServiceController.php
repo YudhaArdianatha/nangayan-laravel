@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Service;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Encore\Admin\Auth\Permission;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -41,10 +42,33 @@ class ServiceController extends AdminController
             return 'Rp ' . number_format($price, 0, ',', '.');
         });        
         $grid->column('slug', __('Slug'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('service_name', 'Service name');
+            $filter->like('service_price', 'Service price');
+        });
+
+        $grid->disableColumnSelector();
+        $grid->disableBatchActions();
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+        });
+        // $grid->column('created_at', __('Created at'));
+        // $grid->column('updated_at', __('Updated at'));
+
+        $grid->tools(function ($tools) {
+            // $tools->append('<a href="' . route('admin.services.export-pdf') . '" class="btn btn-sm btn-danger">Export PDF</a>');
+        });
 
         return $grid;
+    }
+
+    public function exportPdf()
+    {
+        $services = Service::all();
+        $pdf = Pdf::loadView('laravel-admin.servicePDF', compact('services'));
+        return $pdf->download('services.pdf');
     }
 
     /**

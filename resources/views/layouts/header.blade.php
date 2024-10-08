@@ -21,7 +21,7 @@
                 redefined at the most affordable rates
             </p>
             <div>
-                <a href=""><button type="button">Book Now</button></a>
+                <a href="/suites"><button type="button">Book Now</button></a>
             </div>
         </div>
     </div>

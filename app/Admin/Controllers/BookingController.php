@@ -45,6 +45,7 @@ class BookingController extends AdminController
         $grid->model()->orderBy('created_at', 'desc'); 
 
         $grid->column('id', __('Id'))->sortable();
+        // $grid->columnPageNumber();
         $grid->column('user.name', __('User'));
         $grid->column('room.room_type', __('Room Type'));
         $grid->column('checkin_date', __('Checkin date'))->sortable();
@@ -64,6 +65,8 @@ class BookingController extends AdminController
                 . '<p>Total Revenue: Rp ' . number_format($totalRevenue, 0, ',', '.') . '</p>'
                 . '</div>';
         });
+
+        $grid->disableBatchActions();
 
         return $content
             ->title('Bookings')

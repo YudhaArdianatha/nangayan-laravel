@@ -31,7 +31,7 @@
                                             <h4>{{ $room->room_type }}</h4>
                                         </div>
                                         <div class="detail text-md-start">
-                                            <p>{!! $room->room_description !!}</p>
+                                            {!! $room->room_description !!}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
